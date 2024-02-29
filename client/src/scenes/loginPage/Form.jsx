@@ -12,13 +12,13 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../../state";
+import { setLogin } from "../../state/index";
 import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
-  LastName: yup.string().required("required"),
+  lastName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
   location: yup.string().required("required"),
@@ -183,7 +183,7 @@ const Form = () => {
                     acceptedFiles=".jpg,.jpeg,.png"
                     multiple={false}
                     onDrop={(acceptedFiles) =>
-                      setFieldValue("pictures", acceptedFiles[0])
+                      setFieldValue("picture", acceptedFiles[0])
                     }
                   >
                     {({ getRootProps, getInputProps }) => (
@@ -193,15 +193,13 @@ const Form = () => {
                         p="1rem"
                         sx={{ "&:hover": { cursor: "pointer" } }}
                       >
-                        <input {...getInputProps} />
+                        <input {...getInputProps()} />
                         {!values.picture ? (
                           <p>Add Picture Here</p>
                         ) : (
                           <FlexBetween>
-                            <Typography>
-                              {values.picture.name}
-                              <EditOutlinedIcon />
-                            </Typography>
+                            <Typography>{values.picture.name}</Typography>
+                            <EditOutlinedIcon />
                           </FlexBetween>
                         )}
                       </Box>
